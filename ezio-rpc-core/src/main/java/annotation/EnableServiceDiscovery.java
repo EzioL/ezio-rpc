@@ -1,5 +1,8 @@
 package annotation;
 
+import org.springframework.context.annotation.Import;
+import spring.ServiceDiscoveryAutoConfiguration;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,5 +14,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Import(value = ServiceDiscoveryAutoConfiguration.class)
 public @interface EnableServiceDiscovery {
 }
