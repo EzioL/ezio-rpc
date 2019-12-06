@@ -11,5 +11,8 @@
 
     <artifactId>ezio-rpc-simple</artifactId>
 
-
+    <modules>
+        <module>spring-boot-client-simple</module>
+        <module>spring-boot-server-simple</module>
+    </modules>
 </project>

@@ -6,9 +6,30 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ezio-rpc-core" />
         <module name="ezio-rpc-simple" />
+        <module name="spring-boot-client-simple" />
+        <module name="spring-boot-server-simple" />
+        <module name="ezio-rpc-client-simple" />
+        <module name="ezio-rpc-core" />
+        <module name="ezio-rpc-server-simple" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client-simple" target="1.5" />
+      <module name="ezio-rpc-client-simple" target="1.8" />
+      <module name="ezio-rpc-server-simple" target="1.8" />
+      <module name="ezio-rpc-simple" target="1.5" />
+      <module name="server-simple" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="client-simple" options="" />
+      <module name="ezio-rpc-client-simple" options="-parameters" />
+      <module name="ezio-rpc-server-simple" options="-parameters" />
+      <module name="server-simple" options="-parameters" />
+      <module name="spring-boot-client-simple" options="-parameters" />
+      <module name="spring-boot-server-simple" options="-parameters" />
+    </option>
   </component>
 </project>

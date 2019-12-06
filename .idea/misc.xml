@@ -13,7 +13,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/ezio-rpc-simple/server-simple/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/ezio-rpc-client-simple/pom.xml" />
+        <option value="$PROJECT_DIR$/ezio-rpc-server-simple/pom.xml" />
+        <option value="$PROJECT_DIR$/ezio-rpc-simple/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK">
