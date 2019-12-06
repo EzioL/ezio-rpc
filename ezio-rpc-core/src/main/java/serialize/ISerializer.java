@@ -1,4 +1,4 @@
-package serialization;
+package serialize;
 
 /**
  * @creed: Here be dragons !

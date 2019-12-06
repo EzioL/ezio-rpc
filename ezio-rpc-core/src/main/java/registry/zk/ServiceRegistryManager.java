@@ -1,4 +1,4 @@
-package register.zk;
+package registry.zk;
 
 /**
  * @creed: Here be dragons !

@@ -1,4 +1,4 @@
-package register.zk;
+package registry.zk;
 
 import lombok.Data;
 import org.apache.curator.framework.CuratorFramework;
