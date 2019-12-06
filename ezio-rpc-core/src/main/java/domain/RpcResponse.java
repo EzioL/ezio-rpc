@@ -11,5 +11,16 @@ import lombok.Data;
 @Data
 public class RpcResponse {
 
+    private String requestId;
+    private int code;
+    private String msg;
+    private Object data;
 
+    public static RpcResponse ok(String requestId, Object data) {
+        RpcResponse rpcResponse = new RpcResponse();
+        rpcResponse.setRequestId(requestId);
+        rpcResponse.setCode(200);
+        rpcResponse.setData(data);
+        return rpcResponse;
+    }
 }

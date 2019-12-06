@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class RpcRequest {
 
+    private String id;
+
     private String className;
 
     private String methodName;
@@ -18,7 +20,6 @@ public class RpcRequest {
     private Class<?>[] parameterTypes;
 
     private Object[] parameters;
-
 
 
 }
