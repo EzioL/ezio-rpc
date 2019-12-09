@@ -1,6 +1,8 @@
 package domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @creed: Here be dragons !
@@ -9,6 +11,8 @@ import lombok.Data;
  * @desc:
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RpcRequest {
 
     private String id;
@@ -17,7 +21,7 @@ public class RpcRequest {
 
     private String methodName;
 
-    private Class<?>[] parameterTypes;
+    private String[] parameterTypes;
 
     private Object[] parameters;
 

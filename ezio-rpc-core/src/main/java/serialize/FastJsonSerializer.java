@@ -12,23 +12,22 @@ import java.util.UUID;
  * @Time: 2019-10-24 19:07
  * @desc:
  */
-public class FastJsonSerializer implements ISerializer {
+public class FastJsonSerializer {
 
 
-    public <T> byte[] serialize(T t) {
+    public static <T> byte[] serialize(T t) {
 
         return JSON.toJSONBytes(t, SerializerFeature.WriteClassName);
     }
 
-    public <T> T deserialize(byte[] data, Class<T> clazz) {
+    public static <T> T deserialize(byte[] data, Class<T> clazz) {
         return JSON.parseObject(data, clazz);
     }
 
     public static void main(String[] args) {
         RpcRequest request = getRequest();
-        FastJsonSerializer serializer = new FastJsonSerializer();
-        byte[] bytes = serializer.serialize(request);
-        RpcRequest deserialize = serializer.deserialize(bytes, request.getClass());
+        byte[] bytes = FastJsonSerializer.serialize(request);
+        RpcRequest deserialize = FastJsonSerializer.deserialize(bytes, request.getClass());
         System.out.println(request.equals(deserialize));
     }
 
@@ -38,7 +37,7 @@ public class FastJsonSerializer implements ISerializer {
         request.setClassName("com.ezio.service.UserService");
         request.setMethodName("get");
         request.setParameters(new Object[]{24L});
-        request.setParameterTypes(new Class[]{Long.class});
+        request.setParameterTypes(new String[]{"Long.class"});
         return request;
     }
 

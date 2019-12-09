@@ -6,7 +6,10 @@ package registry.zk;
  * @Time: 2019/12/6 5:00 下午
  * @desc:
  */
-public class ServiceRegistryManager {
+public class ServiceRegistryConstant {
+
+
+    public static final String CHARSET_NAME = "utf-8";
 
     public static final String BASE_PATH = "/service/";
 
