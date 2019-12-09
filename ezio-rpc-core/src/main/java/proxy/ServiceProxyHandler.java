@@ -1,5 +1,6 @@
 package proxy;
 
+<<<<<<< HEAD
 import client.ConnectionManager;
 import com.google.common.util.concurrent.SettableFuture;
 import domain.RpcRequest;
@@ -13,6 +14,8 @@ import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+=======
+>>>>>>> a752d2b831a359b9e328fc3a0b608a2a7165753a
 /**
  * @creed: Here be dragons !
  * @author: Ezio
@@ -65,4 +68,5 @@ public class ServiceProxyHandler {
         };
 
     }
+
 }
