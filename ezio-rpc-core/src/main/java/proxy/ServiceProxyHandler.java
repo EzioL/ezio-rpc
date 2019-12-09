@@ -1,12 +1,10 @@
 package proxy;
 
-<<<<<<< HEAD
 import client.ConnectionManager;
 import com.google.common.util.concurrent.SettableFuture;
 import domain.RpcRequest;
 import domain.RpcResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -14,8 +12,7 @@ import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-=======
->>>>>>> a752d2b831a359b9e328fc3a0b608a2a7165753a
+
 /**
  * @creed: Here be dragons !
  * @author: Ezio
