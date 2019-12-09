@@ -2,6 +2,10 @@ package spring;
 
 import org.springframework.context.annotation.Bean;
 import registry.zk.ServiceRegistry;
+import server.RandomPortServiceStarter;
+import server.RpcServerChannelInitializer;
+import server.RpcServerHandler;
+import server.ServiceProvider;
 
 /**
  * @creed: Here be dragons !
@@ -17,4 +21,24 @@ public class ServiceRegistryAutoConfiguration {
         return new ServiceRegistry();
     }
 
+
+    @Bean
+    public ServiceProvider serviceProvider() {
+        return new ServiceProvider();
+    }
+
+    @Bean
+    public RpcServerHandler rpcServerHandler() {
+        return new RpcServerHandler();
+    }
+
+    @Bean
+    public RpcServerChannelInitializer serverChannelInitializer() {
+        return new RpcServerChannelInitializer();
+    }
+
+    @Bean
+    public RandomPortServiceStarter serviceStarter() {
+        return new RandomPortServiceStarter();
+    }
 }

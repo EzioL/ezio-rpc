@@ -6,6 +6,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.net.InetAddress;
 
@@ -16,6 +17,7 @@ import java.net.InetAddress;
  * @desc:
  */
 @Data
+@ConfigurationProperties("service.registry")
 public class ServiceRegistry {
     private String zkAddress;
     private String serviceName;

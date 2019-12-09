@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "service.registry.service-name",
+      "type": "java.lang.String",
+      "description": "Description for service.registry.service-name."
+    },
+    {
+      "name": "service.registry.zk-address",
+      "type": "java.lang.String",
+      "description": "Description for service.registry.zk-address."
+    }
+  ]
+}

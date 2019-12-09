@@ -1,6 +1,8 @@
 package com.ezio.server.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @creed: Here be dragons !
@@ -9,6 +11,8 @@ import lombok.Data;
  * @desc:
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
     private Integer id;
