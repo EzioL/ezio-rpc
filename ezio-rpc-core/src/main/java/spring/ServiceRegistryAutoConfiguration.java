@@ -17,10 +17,7 @@ import server.ServiceProvider;
 public class ServiceRegistryAutoConfiguration {
 
     @Bean
-    public ServiceRegistry serviceRegistry() {
-        return new ServiceRegistry();
-    }
-
+    public ServiceRegistry serviceRegistry() { return new ServiceRegistry(); }
 
     @Bean
     public ServiceProvider serviceProvider() {

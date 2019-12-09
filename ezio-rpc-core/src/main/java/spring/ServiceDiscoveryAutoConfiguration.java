@@ -1,6 +1,8 @@
 package spring;
 
+import client.ConnectionManager;
 import org.springframework.context.annotation.Bean;
+import proxy.ServiceProxyHandler;
 import registry.zk.ServiceDiscovery;
 
 /**
@@ -16,5 +18,17 @@ public class ServiceDiscoveryAutoConfiguration {
     public ServiceDiscovery serviceDiscovery() {
         return new ServiceDiscovery();
     }
+
+
+    @Bean
+    public ServiceProxyHandler serviceProxyHandler() {
+        return new ServiceProxyHandler();
+    }
+
+    @Bean
+    public ConnectionManager connectionManager() {
+        return new ConnectionManager();
+    }
+
 
 }

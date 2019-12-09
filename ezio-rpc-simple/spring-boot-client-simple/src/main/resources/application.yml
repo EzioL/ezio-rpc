@@ -3,3 +3,6 @@ spring:
     name: client-service
 server:
   port: 9910
+service:
+  discovery:
+    zk-address: 'localhost:2181'

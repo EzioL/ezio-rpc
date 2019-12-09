@@ -37,7 +37,7 @@ public class ServiceRegistry {
             String serviceAddress = hostName + ":" + port;
             this.client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                    .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
+                    .forPath(ServiceRegistryConstant.getServicePath(this.serviceName),
                             serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
         } catch (Exception e) {
             throw new RegistryException("register exception", e);

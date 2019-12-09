@@ -1,20 +1,19 @@
 package registry.zk;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * @creed: Here be dragons !
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
  * @desc:
  */
 @Data
+@ConfigurationProperties("service.discovery")
 public class ServiceDiscovery {
 
     private String zkAddress;
@@ -37,18 +37,33 @@ public class ServiceDiscovery {
 
     public ImmutableList<Pair<String, Integer>> getService(String serviceName) {
 
-        List<Pair<String, Integer>> service = Optional.ofNullable(getPathChildrenCache(serviceName))
-                .map(pathChildrenCache -> {
-                    return pathChildrenCache.getCurrentData().stream().map(childData -> {
-                        byte[] data = childData.getData();
-                        String strData = new String(data, StandardCharsets.UTF_8);
-                        String[] split = strData.split(":");
-                        return Pair.of(split[0], Integer.parseInt(split[1]));
-                    }).collect(Collectors.toList());
-                })
-                .orElse(Lists.newArrayList());
+        if (StringUtils.isBlank(serviceName)) {
+            return ImmutableList.of();
+        }
+        try {
+            this.connect();
+            byte[] bytes = this.client.getData().forPath(ServiceRegistryConstant.getServicePath(serviceName));
+            String strData = new String(bytes, StandardCharsets.UTF_8);
+            String[] split = strData.split(":");
 
-        return ImmutableList.copyOf(service);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ImmutableList.of();
+
+//        List<Pair<String, Integer>> service = Optional.ofNullable(getPathChildrenCache(serviceName))
+//                .map(pathChildrenCache -> {
+//                    return pathChildrenCache.getCurrentData().stream().map(childData -> {
+//                        byte[] data = childData.getData();
+//                        String strData = new String(data, StandardCharsets.UTF_8);
+//                        String[] split = strData.split(":");
+//                        return Pair.of(split[0], Integer.parseInt(split[1]));
+//                    }).collect(Collectors.toList());
+//                })
+//                .orElse(Lists.newArrayList());
+//
+//        return ImmutableList.copyOf(service);
     }
 
     // TODO: Ezio 2019/12/9
@@ -68,20 +83,19 @@ public class ServiceDiscovery {
     }
 
 
-
     @SneakyThrows
     public static void main(String[] args) {
-        ServiceRegistry serviceRegistry = new ServiceRegistry();
-        serviceRegistry.setServiceName("ezio111");
-        serviceRegistry.setZkAddress("localhost:2181");
-        serviceRegistry.connect();
-        serviceRegistry.register(9000);
-        Thread.sleep(2000);
+//        ServiceRegistry serviceRegistry = new ServiceRegistry();
+//        serviceRegistry.setServiceName("ezio111");
+//        serviceRegistry.setZkAddress("localhost:2181");
+//        serviceRegistry.connect();
+//        serviceRegistry.register(9000);
+//        Thread.sleep(2000);
 
         ServiceDiscovery serviceDiscovery = new ServiceDiscovery();
         serviceDiscovery.setZkAddress("localhost:2181");
         serviceDiscovery.connect();
-        ImmutableList<Pair<String, Integer>> test = serviceDiscovery.getService("ezio111");
+        ImmutableList<Pair<String, Integer>> test = serviceDiscovery.getService("server-service");
         System.out.println(test);
 
 
