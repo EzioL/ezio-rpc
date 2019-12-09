@@ -1,5 +1,6 @@
 package registry.zk;
 
+import exception.RegistryException;
 import lombok.Data;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -22,20 +23,22 @@ public class ServiceRegistry {
 
 
     public synchronized void connect() {
-        CuratorFramework client = CuratorFrameworkFactory.newClient(this.zkAddress, 15 * 1000,
+        this.client = CuratorFrameworkFactory.newClient(this.zkAddress, 15 * 1000,
                 5000, new ExponentialBackoffRetry(1000, 3));
-        client.start();
-        this.client = client;
+        this.client.start();
+
     }
 
     public void register(int port) {
         try {
             String hostName = InetAddress.getLocalHost().getHostName();
             String serviceAddress = hostName + ":" + port;
-            this.client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(
-                    ServiceRegistryManager.getServicePath(this.serviceName) + "/server", serviceAddress.getBytes());
+            this.client.create().creatingParentsIfNeeded()
+                    .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
+                    .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
+                            serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RegistryException("register exception", e);
         }
     }
 
@@ -53,7 +56,7 @@ public class ServiceRegistry {
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
                     .forPath(
-                            ServiceRegistryManager.getServicePath("test") + "/server", serviceAddress.getBytes());
+                            ServiceRegistryConstant.getServicePath("test") + "/server", serviceAddress.getBytes());
 
         } catch (Exception e) {
             e.printStackTrace();
