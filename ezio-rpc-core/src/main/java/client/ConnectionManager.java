@@ -57,7 +57,9 @@ public class ConnectionManager {
             Bootstrap bootstrap = new Bootstrap();
             RpcClientChannelInitializer channelInitializer = new RpcClientChannelInitializer();
             try {
-                bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(channelInitializer)
+                bootstrap.group(eventLoopGroup)
+                        .channel(NioSocketChannel.class)
+                        .handler(channelInitializer)
                         .option(ChannelOption.SO_KEEPALIVE, true);
                 ChannelFuture connectFuture = bootstrap.connect(serviceAddr.getKey(), serviceAddr.getValue()).sync();
                 connectFuture.sync();

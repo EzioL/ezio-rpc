@@ -1,10 +1,11 @@
 package proxy;
 
 import client.ConnectionManager;
-import com.google.common.util.concurrent.SettableFuture;
+import client.RpcClientHandler;
 import domain.RpcRequest;
 import domain.RpcResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -57,9 +58,9 @@ public class ServiceProxyHandler {
 
                 RpcRequest request = new RpcRequest(UUID.randomUUID().toString(), className, methodName,
                         parameterTypes, args);
-                SettableFuture<RpcResponse> settableFuture = connectionManager.getRpcClientHandler(serviceName)
-                        .sendRequest(request);
-                return settableFuture.get().getData();
+                RpcClientHandler rpcClientHandler = connectionManager.getRpcClientHandler(serviceName);
+                RpcResponse response = rpcClientHandler.sendRequest(request);
+                return response.getData();
 
             }
         };

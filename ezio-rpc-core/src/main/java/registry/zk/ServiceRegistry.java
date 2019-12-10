@@ -2,6 +2,7 @@ package registry.zk;
 
 import exception.RegistryException;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @Data
 @ConfigurationProperties("service.registry")
+@Slf4j
 public class ServiceRegistry {
     private String zkAddress;
     private String serviceName;
@@ -36,10 +38,12 @@ public class ServiceRegistry {
         try {
             String hostName = InetAddress.getLocalHost().getHostName();
             String serviceAddress = hostName + ":" + port;
-            this.client.create().creatingParentsIfNeeded()
+            String path = this.client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
                     .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
                             serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
+            log.info("Service registered! name: {} ,path: {}", this.serviceName, path);
+
         } catch (Exception e) {
             throw new RegistryException("register exception", e);
         }

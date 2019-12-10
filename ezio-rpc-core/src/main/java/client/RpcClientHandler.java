@@ -1,11 +1,11 @@
 package client;
 
-import com.google.common.util.concurrent.SettableFuture;
 import domain.RpcRequest;
 import domain.RpcResponse;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.springframework.util.Assert;
 
 import java.net.SocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +20,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 
     private Channel channel;
     private SocketAddress serverAddress;
-    private ConcurrentHashMap<String, SettableFuture<RpcResponse>> requestContext = new ConcurrentHashMap<>(16);
+    private ConcurrentHashMap<String, RpcResponse> requestContext = new ConcurrentHashMap<>(16);
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
@@ -34,26 +34,24 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
         serverAddress = ctx.channel().remoteAddress();
     }
 
-    public SocketAddress getServerAddress() {
-        return serverAddress;
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcResponse msg) throws Exception {
         String requestId = msg.getRequestId();
-        SettableFuture<RpcResponse> rpcResponseFuture = requestContext.get(requestId);
+        RpcResponse rpcResponse = requestContext.get(requestId);
+        Assert.notNull(rpcResponse, "rpcResponseFuture for requestId " + requestId + " should not be null");
         requestContext.remove(requestId);
-        rpcResponseFuture.set(msg);
+        rpcResponse = msg;
 
     }
 
 
-    public SettableFuture<RpcResponse> sendRequest(RpcRequest request) {
+    public RpcResponse sendRequest(RpcRequest request) {
         String requestId = request.getId();
-        SettableFuture<RpcResponse> future = SettableFuture.create();
-        requestContext.put(requestId, future);
+        RpcResponse rpcResponse = new RpcResponse();
+        requestContext.put(requestId, rpcResponse);
         channel.writeAndFlush(request);
-        return future;
+        return rpcResponse;
     }
 
 
