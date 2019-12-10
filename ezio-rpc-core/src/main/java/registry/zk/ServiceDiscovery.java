@@ -12,8 +12,10 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @creed: Here be dragons !
@@ -36,21 +38,28 @@ public class ServiceDiscovery {
     }
 
     public ImmutableList<Pair<String, Integer>> getService(String serviceName) {
-
+        ImmutableList<Pair<String, Integer>> resultList = ImmutableList.of();
         if (StringUtils.isBlank(serviceName)) {
-            return ImmutableList.of();
+            return resultList;
         }
         try {
             this.connect();
-            byte[] bytes = this.client.getData().forPath(ServiceRegistryConstant.getServicePath(serviceName));
-            String strData = new String(bytes, StandardCharsets.UTF_8);
-            String[] split = strData.split(":");
-
+            String servicePath = ServiceRegistryConstant.getServicePath(serviceName);
+            List<Pair<String, Integer>> result = this.client.getChildren().forPath(servicePath).stream().map(childPath -> {
+                byte[] bytes = new byte[0];
+                try {
+                    bytes = this.client.getData().forPath(servicePath + "/" + childPath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String[] data = new String(bytes, StandardCharsets.UTF_8).split(":");
+                return Pair.of(data[0], Integer.parseInt(data[1]));
+            }).collect(Collectors.toList());
+            resultList = ImmutableList.copyOf(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return ImmutableList.of();
+        return resultList;
 
 //        List<Pair<String, Integer>> service = Optional.ofNullable(getPathChildrenCache(serviceName))
 //                .map(pathChildrenCache -> {
@@ -95,7 +104,7 @@ public class ServiceDiscovery {
         ServiceDiscovery serviceDiscovery = new ServiceDiscovery();
         serviceDiscovery.setZkAddress("localhost:2181");
         serviceDiscovery.connect();
-        ImmutableList<Pair<String, Integer>> test = serviceDiscovery.getService("server-service");
+        ImmutableList<Pair<String, Integer>> test = serviceDiscovery.getService("ezio1");
         System.out.println(test);
 
 

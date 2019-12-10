@@ -9,6 +9,7 @@ import org.apache.zookeeper.CreateMode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.net.InetAddress;
+import java.util.List;
 
 /**
  * @creed: Here be dragons !
@@ -37,7 +38,7 @@ public class ServiceRegistry {
             String serviceAddress = hostName + ":" + port;
             this.client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                    .forPath(ServiceRegistryConstant.getServicePath(this.serviceName),
+                    .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
                             serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
         } catch (Exception e) {
             throw new RegistryException("register exception", e);
@@ -52,13 +53,34 @@ public class ServiceRegistry {
 
         client.start();
         try {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            String serviceAddress = hostName + ":" + 9999;
-            client.create()
-                    .creatingParentsIfNeeded()
+            String hostName = "127.0.0.1";
+            String serviceAddress = hostName + ":" + 9992;
+
+            String path = ServiceRegistryConstant.getServicePath("ezio1");
+            byte[] bytes = serviceAddress.getBytes("UTF-8");
+            String s = client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                    .forPath(
-                            ServiceRegistryConstant.getServicePath("test") + "/server", serviceAddress.getBytes());
+                    .forPath(path + "/server", "127.0.0.1:9101".getBytes());
+            System.out.println(s);
+            String s2 = client.create().creatingParentsIfNeeded()
+                    .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
+                    .forPath(path + "/server", "127.0.0.1:9102".getBytes());
+            System.out.println(s2);
+//            client.setData()
+//                    .forPath(path, bytes);
+            List<String> strings = client.getChildren().forPath(path);
+            System.out.println(strings);
+            strings.stream().map(e -> {
+                try {
+                    return new String(client.getData().forPath(path + "/" + e));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return null;
+            }).forEach(System.out::println);
+
+//            byte[] bytes1 = client.getData().forPath(path);
+//            System.out.println(new String(bytes1));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,10 +1,10 @@
 spring:
   application:
-    name: server-service
+    name: simple-server
 server:
   port: 9911
 
 service:
   registry:
-    service-name: 'server-service'
+    service-name: 'simple-server'
     zk-address: 'localhost:2181'

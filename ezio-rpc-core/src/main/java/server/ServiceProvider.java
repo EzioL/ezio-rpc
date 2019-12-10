@@ -69,9 +69,7 @@ public class ServiceProvider implements ApplicationContextAware {
         Object result = null;
         try {
             result = method.invoke(service, request.getParameters());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return result;

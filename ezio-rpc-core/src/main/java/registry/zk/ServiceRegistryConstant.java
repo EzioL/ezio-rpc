@@ -14,6 +14,6 @@ public class ServiceRegistryConstant {
     public static final String BASE_PATH = "/service/";
 
     public static String getServicePath(String serviceName) {
-        return BASE_PATH + serviceName;
+        return BASE_PATH + serviceName ;
     }
 }
