@@ -2,6 +2,8 @@ package server;
 
 import annotation.RpcService;
 import domain.RpcRequest;
+import exception.InvokeException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
  * @Time: 2019/12/9 7:49 下午
  * @desc:
  */
+@Slf4j
 public class ServiceProvider implements ApplicationContextAware {
 
     private ApplicationContext context;
@@ -61,7 +64,7 @@ public class ServiceProvider implements ApplicationContextAware {
             try {
                 return ClassUtils.forName(typeStr, ClassUtils.getDefaultClassLoader());
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new InvokeException("class not found", e);
             }
         }).toArray(Class[]::new);
         Method method = ClassUtils.getMethod(service.getClass(), request.getMethodName(), parameterClasses);
@@ -70,8 +73,10 @@ public class ServiceProvider implements ApplicationContextAware {
         try {
             result = method.invoke(service, request.getParameters());
         } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            throw new InvokeException("invoke fail", e);
         }
+        log.info("server service invoke: {}", result);
+
         return result;
     }
 }

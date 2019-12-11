@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="netty-simple" />
         <module name="spring-boot-client-simple" />
-        <module name="spring-boot-server-simple" />
         <module name="ezio-rpc-client-simple" />
-        <module name="ezio-rpc-core" />
+        <module name="spring-boot-server-simple" />
         <module name="spring-boot-server-simple-api" />
+        <module name="ezio-rpc-core" />
         <module name="ezio-rpc-server-simple" />
       </profile>
     </annotationProcessing>

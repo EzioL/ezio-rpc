@@ -36,13 +36,13 @@ public class ServiceRegistry {
 
     public void register(int port) {
         try {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            String serviceAddress = hostName + ":" + port;
+            String hostAddress = InetAddress.getLocalHost().getHostAddress();
+            String serviceAddress = hostAddress + ":" + port;
             String path = this.client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
                     .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
                             serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
-            log.info("Service registered! name: {} ,path: {}", this.serviceName, path);
+            log.info("service registered! name: {} ,path: {}", this.serviceName, serviceAddress);
 
         } catch (Exception e) {
             throw new RegistryException("register exception", e);

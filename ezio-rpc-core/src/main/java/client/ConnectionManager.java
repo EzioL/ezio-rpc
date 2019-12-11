@@ -8,6 +8,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import registry.zk.ServiceDiscovery;
@@ -22,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Time: 2019/12/9 6:41 下午
  * @desc:
  */
+@Slf4j
 public class ConnectionManager {
 
     @Autowired
@@ -61,7 +63,7 @@ public class ConnectionManager {
                         .channel(NioSocketChannel.class)
                         .handler(channelInitializer)
                         .option(ChannelOption.SO_KEEPALIVE, true);
-                ChannelFuture connectFuture = bootstrap.connect(serviceAddr.getKey(), serviceAddr.getValue()).sync();
+                ChannelFuture connectFuture = bootstrap.connect("localhost", serviceAddr.getValue()).sync();
                 connectFuture.sync();
                 handlers.put(addr, channelInitializer.getRpcClientHandler());
                 return channelInitializer.getRpcClientHandler();
@@ -70,4 +72,6 @@ public class ConnectionManager {
             }
         }
     }
+
+
 }

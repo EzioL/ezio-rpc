@@ -11,6 +11,7 @@
     <modules>
         <module>ezio-rpc-core</module>
         <module>ezio-rpc-simple</module>
+        <module>netty-simple</module>
     </modules>
 
 

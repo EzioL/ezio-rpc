@@ -1,5 +1,6 @@
 package client;
 
+import com.google.common.util.concurrent.SettableFuture;
 import domain.RpcRequest;
 import domain.RpcResponse;
 import io.netty.channel.Channel;
@@ -20,7 +21,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 
     private Channel channel;
     private SocketAddress serverAddress;
-    private ConcurrentHashMap<String, RpcResponse> requestContext = new ConcurrentHashMap<>(16);
+    private ConcurrentHashMap<String, SettableFuture<RpcResponse>> requestContext = new ConcurrentHashMap<>(16);
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
@@ -38,20 +39,20 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcResponse msg) throws Exception {
         String requestId = msg.getRequestId();
-        RpcResponse rpcResponse = requestContext.get(requestId);
-        Assert.notNull(rpcResponse, "rpcResponseFuture for requestId " + requestId + " should not be null");
+        SettableFuture<RpcResponse> future = requestContext.get(requestId);
+        Assert.notNull(future, "rpcResponseFuture for requestId " + requestId + " should not be null");
         requestContext.remove(requestId);
-        rpcResponse = msg;
+        future.set(msg);
 
     }
 
 
-    public RpcResponse sendRequest(RpcRequest request) {
+    public SettableFuture<RpcResponse> sendRequest(RpcRequest request) {
         String requestId = request.getId();
-        RpcResponse rpcResponse = new RpcResponse();
-        requestContext.put(requestId, rpcResponse);
+        SettableFuture<RpcResponse> future = SettableFuture.create();
+        requestContext.put(requestId, future);
         channel.writeAndFlush(request);
-        return rpcResponse;
+        return future;
     }
 
 
