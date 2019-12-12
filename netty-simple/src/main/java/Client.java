@@ -1,4 +1,4 @@
-import domain.RpcRequest;
+import com.google.common.util.concurrent.SettableFuture;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -6,12 +6,15 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -39,13 +42,16 @@ public class Client {
             ClientHandler clientHandler = new ClientHandler();
             b.group(group)
                     .channel(NioSocketChannel.class)
-                    .remoteAddress(new InetSocketAddress("localhost", 5600))
+//                    .remoteAddress(new InetSocketAddress("localhost", 8899))
+                    .remoteAddress(new InetSocketAddress("10.69.60.235", 52532))
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
 //                                    .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,0, 4, 0, 4))
 //                                    .addLast(new LengthFieldPrepender(4))
+                                    .addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4))
+                                    .addLast(new LengthFieldPrepender(4, false))
                                     .addLast(new ObjectEncoder())
                                     .addLast(new ObjectDecoder(Integer.MAX_VALUE,
                                             ClassResolvers.weakCachingConcurrentResolver(null)))
@@ -54,8 +60,17 @@ public class Client {
                     });
             // 连接远程节点直到连接完成
             ChannelFuture future = b.connect().sync();
+//            future.
+//            Future<RpcResponse> future1 = clientHandler.sendRpcRequest();
+//            RpcResponse response = future1.get();
+            SettableFuture settableFuture = clientHandler.sendRpcRequest();
+            try {
+                System.out.println(settableFuture.get());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
 
-            future.channel().writeAndFlush(new RpcRequest( "ezio",null,null,null,null)).sync();
+            // future.channel().writeAndFlush(new RpcRequest( "ezio",null,null,null,null)).sync();
 //            future.channel().writeAndFlush(Unpooled.copiedBuffer("ezio", CharsetUtil.UTF_8));
 //            future.channel().writeAndFlush("ezio");
 //            future.channel().writeAndFlush(10);

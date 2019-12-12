@@ -38,7 +38,7 @@ public class ServiceRegistry {
         try {
             String hostAddress = InetAddress.getLocalHost().getHostAddress();
             String serviceAddress = hostAddress + ":" + port;
-            String path = this.client.create().creatingParentsIfNeeded()
+            this.client.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
                     .forPath(ServiceRegistryConstant.getServicePath(this.serviceName) + "/server",
                             serviceAddress.getBytes(ServiceRegistryConstant.CHARSET_NAME));
