@@ -23,9 +23,9 @@ public class SpringBootClientSimpleApplication {
 
 
         return (String... args) -> {
+
             UserService userService = serviceProxyHandler.serviceProxy("simple-server", UserService.class);
             UserDTO dto = userService.getById(1);
-            System.out.println(dto);
 
         };
 

@@ -6,6 +6,7 @@ import domain.RpcResponse;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
 import java.net.SocketAddress;
@@ -17,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Time: 2019/12/9 6:05 下午
  * @desc:
  */
+@Slf4j
 public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 
     private Channel channel;
@@ -43,7 +45,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
         Assert.notNull(future, "rpcResponseFuture for requestId " + requestId + " should not be null");
         requestContext.remove(requestId);
         future.set(msg);
-
+        log.info("client received:{}", msg);
     }
 
 
@@ -52,6 +54,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
         SettableFuture<RpcResponse> future = SettableFuture.create();
         requestContext.put(requestId, future);
         channel.writeAndFlush(request);
+        log.info("client send request:{}", request);
         return future;
     }
 

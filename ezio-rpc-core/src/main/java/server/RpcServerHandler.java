@@ -34,12 +34,17 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
         log.info("server received: {}", msg);
         RpcRequest request = (RpcRequest) msg;
         Object invoke = serviceProvider.invoke(request);
-        RpcResponse response = RpcResponse.success(request.getId(),invoke );
+
+
+        RpcResponse response = RpcResponse.success(request.getId(), invoke);
         RpcResponse response1 = new RpcResponse();
         response1.setCode(200);
-        response1.setData("hahahha");
 
-        ctx.writeAndFlush(response1);
+//        response1.setData("hahahha");
+        RpcRequest request1 = new RpcRequest("ezio", null, null, null, null);
+        response1.setData(request1);
+
+        ctx.writeAndFlush(response);
 
     }
 }

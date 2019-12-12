@@ -43,7 +43,7 @@ public class Client {
             b.group(group)
                     .channel(NioSocketChannel.class)
 //                    .remoteAddress(new InetSocketAddress("localhost", 8899))
-                    .remoteAddress(new InetSocketAddress("10.69.60.235", 52532))
+                    .remoteAddress(new InetSocketAddress("10.69.60.235", 35754))
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
