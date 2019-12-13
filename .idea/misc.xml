@@ -21,6 +21,7 @@
         <option value="$PROJECT_DIR$/ezio-rpc-client-simple/pom.xml" />
         <option value="$PROJECT_DIR$/ezio-rpc-server-simple/pom.xml" />
         <option value="$PROJECT_DIR$/ezio-rpc-simple/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-simple/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-server-simple-api/pom.xml" />
       </set>
     </option>
