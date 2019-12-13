@@ -5,10 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/10/24 9:44 上午
- * @desc:
+ * 2019/10/24 9:44 上午
+ *
  */
 @Data
 public class RpcResponse implements Serializable {

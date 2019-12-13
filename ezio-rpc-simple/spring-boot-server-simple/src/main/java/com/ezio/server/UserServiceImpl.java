@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/9 7:22 下午
- * @desc:
+ * 2019/12/9 7:22 下午
+ *
  */
 @RpcService(value = UserService.class)
 public class UserServiceImpl implements UserService {

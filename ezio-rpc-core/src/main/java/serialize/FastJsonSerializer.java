@@ -7,10 +7,10 @@ import domain.RpcRequest;
 import java.util.UUID;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019-10-24 19:07
- * @desc:
+ * 2019-10-24 19:07
+ *
  */
 public class FastJsonSerializer {
 

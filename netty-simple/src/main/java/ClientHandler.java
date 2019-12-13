@@ -8,10 +8,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/11 12:22 下午
- * @desc:
+ * 2019/12/11 12:22 下午
+ *
  */
 @ChannelHandler.Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<Object> {

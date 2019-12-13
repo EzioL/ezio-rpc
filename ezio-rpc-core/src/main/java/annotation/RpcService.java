@@ -8,10 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/9 6:38 下午
- * @desc:
+ * 2019/12/9 6:38 下午
+ *
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -13,10 +13,10 @@ import java.net.InetAddress;
 import java.util.List;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 4:58 下午
- * @desc:
+ * 2019/12/6 4:58 下午
+ *
  */
 @Data
 @ConfigurationProperties("service.registry")

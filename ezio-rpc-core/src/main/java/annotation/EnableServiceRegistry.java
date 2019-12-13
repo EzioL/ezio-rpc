@@ -6,10 +6,10 @@ import spring.ServiceRegistryAutoConfiguration;
 import java.lang.annotation.*;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 11:16 上午
- * @desc:
+ * 2019/12/6 11:16 上午
+ *
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

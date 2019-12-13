@@ -9,10 +9,10 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/9 6:02 下午
- * @desc:
+ * 2019/12/9 6:02 下午
+ *
  */
 public class RpcClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 

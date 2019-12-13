@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 7:14 下午
- * @desc:
+ * 2019/12/6 7:14 下午
+ *
  */
 @Data
 @NoArgsConstructor

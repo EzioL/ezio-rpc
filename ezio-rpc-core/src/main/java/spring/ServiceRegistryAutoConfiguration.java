@@ -8,10 +8,10 @@ import server.RpcServerHandler;
 import server.ServiceProvider;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 6:45 下午
- * @desc:
+ * 2019/12/6 6:45 下午
+ *
  */
 
 public class ServiceRegistryAutoConfiguration {

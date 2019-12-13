@@ -3,10 +3,10 @@ import com.google.common.util.concurrent.SettableFuture;
 import java.util.concurrent.ExecutionException;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/12 4:02 下午
- * @desc:
+ * 2019/12/12 4:02 下午
+ *
  */
 public class SettableFutureTest {
 

@@ -5,10 +5,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/9 6:20 下午
- * @desc:
+ * 2019/12/9 6:20 下午
+ *
  */
 public class RpcEncoder<T> extends MessageToByteEncoder<T> {
     @Override

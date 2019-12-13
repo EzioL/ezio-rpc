@@ -18,10 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 5:33 下午
- * @desc:
+ * 2019/12/6 5:33 下午
+ *
  */
 @Data
 @ConfigurationProperties("service.discovery")

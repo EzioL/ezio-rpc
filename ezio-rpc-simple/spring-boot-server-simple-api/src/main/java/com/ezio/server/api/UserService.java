@@ -5,10 +5,10 @@ import com.ezio.server.dto.UserDTO;
 import java.util.List;
 
 /**
- * @creed: Here be dragons !
+ * Here be dragons !
  * @author: Ezio
- * @Time: 2019/12/6 7:13 下午
- * @desc:
+ * 2019/12/6 7:13 下午
+ *
  */
 public interface UserService {
 
