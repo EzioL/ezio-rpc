@@ -1,12 +1,13 @@
 package client;
 
+import domain.RpcRequest;
+import domain.RpcResponse;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
+import serialize.RpcDecoder;
+import serialize.RpcEncoder;
 
 /**
  * Here be dragons !
@@ -28,9 +29,8 @@ public class RpcClientChannelInitializer extends ChannelInitializer<SocketChanne
         ch.pipeline()
                 .addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4))
                 .addLast(new LengthFieldPrepender(4, false))
-                .addLast(new ObjectEncoder())
-                .addLast(new ObjectDecoder(Integer.MAX_VALUE,
-                        ClassResolvers.weakCachingConcurrentResolver(null)))
+                .addLast(new RpcDecoder<RpcResponse>(){})
+                .addLast(new RpcEncoder<RpcRequest>(){})
                 .addLast(rpcClientHandler);
 
 
